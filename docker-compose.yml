@@ -1,0 +1,20 @@
+version: '2'
+
+services:
+
+  oloapprtc:
+    container_name: olowebrtc
+    build: .
+    ports:
+      - 8099:8080
+#    volumes:
+#     - ./cert:/cert/cert.pem
+    #entrypoint: /srv/google-cloud-sdk/platform/google_appengine/dev_appserver.py ./out/chrome_app
+#    entrypoint: top -b
+
+#    restart: always
+
+#networks:
+#  default:
+#    external:
+#      name: OLONET

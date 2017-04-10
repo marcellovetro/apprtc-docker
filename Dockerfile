@@ -1,5 +1,5 @@
-FROM ubuntu
-MAINTAINER Benjamin Faal
+FROM ubuntu:xenial
+MAINTAINER Marcello Vetro
 
 ENV SHARED_KEY FILL_KEY_IN
 ENV TURN_IP FILL_TURN_IP_IN
@@ -10,18 +10,11 @@ RUN apt-get update -y
 RUN apt-get install -y wget
 
 # Google App Engine and Python 2.7
-ENV GAE_VER 1.9.23
-ENV GAE_ZIP go_appengine_sdk_linux_amd64-$GAE_VER.zip
 
 RUN apt-get update && \
     apt-get install --yes \
         unzip \
 	python
-
-ADD https://storage.googleapis.com/appengine-sdks/featured/$GAE_ZIP .
-RUN unzip -q $GAE_ZIP -d /usr/local
-RUN rm $GAE_ZIP
-ENV PATH $PATH:/usr/local/go_appengine/
 
 RUN apt-get install python2.7 python-pil -y
 RUN apt-get install python-webtest -y
@@ -37,9 +30,16 @@ RUN apt-get install -y nodejs
 RUN ln -s -f /usr/bin/nodejs /usr/bin/node
 
 RUN apt-get install -y build-essential
-
 # GIT
 RUN apt-get install -y git
+
+ENV GAE_VER 1.9.48
+ENV GAE_ZIP go_appengine_sdk_linux_amd64-$GAE_VER.zip
+
+ADD https://storage.googleapis.com/appengine-sdks/featured/$GAE_ZIP .
+RUN unzip -q $GAE_ZIP -d /usr/local
+RUN rm $GAE_ZIP
+ENV PATH $PATH:/usr/local/go_appengine/
 
 RUN git clone https://github.com/BenjaminFaal/apprtc
 
